@@ -1,36 +1,28 @@
 #include <Windows.h>
 #include <windowsx.h>
-#include <stdio.h>
+
+#include "ddraw.h"
+
+LPDIRECTDRAW7 dd = NULL;
+LPDIRECTDRAWSURFACE7 primary = NULL;
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
-	HDC hdc;
-	hdc = GetDC(hwnd);
-
 	switch (msg)
 	{
-		case WM_KEYDOWN:
-		{
-			char s[20];
-			switch (wparam)
-			{
-				case VK_RIGHT: strcpy(s, "right		"); break;
-				case VK_LEFT: strcpy(s, "  left		"); break;
-				default: strcpy(s, "				"); break;
-			}
+	case WM_PAINT:
+	{
 
-				TextOut(hdc, 10, 50, s, strlen(s));
-		}break;
+	}break;
 
-		case WM_PAINT:
-		{
-
-		}break;
-
-		case WM_DESTROY:
-		{
-			PostQuitMessage(0);
-		}break;
+	case WM_DESTROY:
+	{
+		primary->Release();
+		primary = NULL;
+		dd->Release();
+		dd = NULL;
+		PostQuitMessage(0);
+	}break;
 	}
 	return (DefWindowProc(hwnd, msg, wparam, lparam));
 }
@@ -62,6 +54,26 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstance, LPSTR lpcmdline
 	ShowWindow(hwnd, ncmdshow);
 	UpdateWindow(hwnd);
 
+	DirectDrawCreateEx(NULL, (LPVOID*)&dd, IID_IDirectDraw7, NULL);
+
+	dd->SetCooperativeLevel(hwnd, DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN);
+	dd-> SetDisplayMode(800, 600, 16, 0, 0);
+
+	DDSURFACEDESC2 surf;
+	ZeroMemory(&surf, sizeof(surf));
+	surf.dwSize = sizeof(surf);
+	surf.dwFlags = DDSD_CAPS;
+	surf.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE;
+
+	dd->CreateSurface(&surf, &primary, NULL);
+	
+	HDC hdc;
+	hdc = GetDC(hwnd);
+	primary->GetDC(&hdc);
+	TextOut(hdc, 100, 100, "Hello", 5);
+	primary->ReleaseDC(hdc);
+
+
 	while (1)
 	{
 		if (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
@@ -71,6 +83,11 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstance, LPSTR lpcmdline
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
+			else
+			{
+				//Game Main
+
+			}
 	}
 	return (msg.wParam);
 }
