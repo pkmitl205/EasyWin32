@@ -9,11 +9,17 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 
 	switch (msg)
 	{
-		case WM_CHAR:
+		case WM_KEYDOWN:
 		{
 			char s[20];
-			sprintf(s, "%c (%d)		", (int)wparam, (int)wparam);
-			TextOut(hdc, 10, 50, s, strlen(s));
+			switch (wparam)
+			{
+				case VK_RIGHT: strcpy(s, "right		"); break;
+				case VK_LEFT: strcpy(s, "left		"); break;
+				default: strcpy(s, "				"); break;
+			}
+				TextOut(hdc, 10, 50, s, strlen(s));
+
 		}break;
 
 		case WM_PAINT:
