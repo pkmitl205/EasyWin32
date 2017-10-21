@@ -15,11 +15,11 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 			switch (wparam)
 			{
 				case VK_RIGHT: strcpy(s, "right		"); break;
-				case VK_LEFT: strcpy(s, "left		"); break;
+				case VK_LEFT: strcpy(s, "  left		"); break;
 				default: strcpy(s, "				"); break;
 			}
-				TextOut(hdc, 10, 50, s, strlen(s));
 
+				TextOut(hdc, 10, 50, s, strlen(s));
 		}break;
 
 		case WM_PAINT:
