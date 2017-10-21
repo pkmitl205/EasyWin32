@@ -66,6 +66,13 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstance, LPSTR lpcmdline
 	surf.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE;
 
 	dd->CreateSurface(&surf, &primary, NULL);
+	
+	HDC hdc;
+	hdc = GetDC(hwnd);
+	primary->GetDC(&hdc);
+	TextOut(hdc, 100, 100, "Hello", 5);
+	primary->ReleaseDC(hdc);
+
 
 	while (1)
 	{
@@ -79,6 +86,7 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstance, LPSTR lpcmdline
 			else
 			{
 				//Game Main
+
 			}
 	}
 	return (msg.wParam);
