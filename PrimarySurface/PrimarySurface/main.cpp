@@ -57,7 +57,7 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstance, LPSTR lpcmdline
 	DirectDrawCreateEx(NULL, (LPVOID*)&dd, IID_IDirectDraw7, NULL);
 
 	dd->SetCooperativeLevel(hwnd, DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN);
-	dd-> SetDisplayMode(800, 600, 16, 0, 0);
+//	dd-> SetDisplayMode(800, 600, 16, 0, 0);
 
 	DDSURFACEDESC2 surf;
 	ZeroMemory(&surf, sizeof(surf));
