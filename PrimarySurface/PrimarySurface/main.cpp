@@ -80,7 +80,7 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstance, LPSTR lpcmdline
 	wcex.cbWndExtra = 0;
 	wcex.hInstance = hinstance;
 
-	wcex.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
+	wcex.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
 	wcex.lpszClassName = "MyWin";
 	wcex.lpszMenuName = NULL;
 	wcex.hIcon = LoadIcon(hinstance, IDI_APPLICATION);
@@ -100,7 +100,7 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstance, LPSTR lpcmdline
 	DirectDrawCreateEx(NULL, (LPVOID*)&dd, IID_IDirectDraw7, NULL);
 
 	dd->SetCooperativeLevel(hwnd, DDSCL_EXCLUSIVE | DDSCL_FULLSCREEN);
-	dd-> SetDisplayMode(800, 600, 16, 0, 0);
+	//dd-> SetDisplayMode(800, 600, 16, 0, 0);
 
 	DDSURFACEDESC2 surf;
 	ZeroMemory(&surf, sizeof(surf));
@@ -133,7 +133,7 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstance, LPSTR lpcmdline
 			else
 			{
 				//Game Main
-				x += 3;
+				x += 1;
 				dest_r.left = x;
 				dest_r.top = 100;
 				dest_r.right = dest_r.left + 105;
